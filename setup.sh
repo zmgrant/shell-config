@@ -33,8 +33,40 @@ configure_shell() {
   fi
 }
 
-# Make sure we have access to the installed oh-my-posh
-export PATH=$PATH:$HOME/.local/bin
+# Reload the shell config
+reload_shell() {
+  echo "Reloading shell configuration..."
+  if [[ "$SHELL_TYPE" == "bash" ]]; then
+    source "$SHELL_CONFIG"
+  elif [[ "$SHELL_TYPE" == "zsh" ]]; then
+    exec zsh
+  fi
+}
+
+# Sort out the path
+check_path() {
+  if ! hash oh-my-posh &> /dev/null; then
+    echo "oh-my-posh not found on path, attempting to add..."
+    case "$OS" in
+      Linux)
+        echo "export PATH=$PATH:$HOME/.local/bin" >> $shell_config
+        ;;
+      Darwin)
+        echo "export PATH=$PATH:/opt/homebrew/bin" >> $shell_config
+        ;;
+      *)
+        echo "Unsupported OS: $OS"
+        exit 1
+        ;;
+    esac
+  fi
+  
+  reload_shell
+  if ! hash oh-my-posh &> /dev/null; then
+    echo "Path is borked, still can't find oh-my-posh! Exiting"
+    exit 1
+}
+
 
 # Detect OS
 OS=$(uname -s)
@@ -44,19 +76,11 @@ case "$OS" in
     SHELL_CONFIG="$HOME/.bashrc"
     SHELL_TYPE="bash"
     ;;
-
   Darwin)
     echo "Detected macOS."
     SHELL_CONFIG="$HOME/.zshrc"
     SHELL_TYPE="zsh"
     ;;
-
-  CYGWIN*|MINGW32*|MSYS*|MINGW*)
-    echo "Detected Windows."
-    SHELL_CONFIG="$HOME/.bashrc"
-    SHELL_TYPE="bash"
-    ;;
-
   *)
     echo "Unsupported OS: $OS"
     exit 1
@@ -64,15 +88,10 @@ case "$OS" in
 esac
 
 install_oh_my_posh
+check_path
 install_font
 configure_shell "$SHELL_CONFIG" "$SHELL_TYPE"
 
-# Reload the shell config
-echo "Reloading shell configuration..."
-if [[ "$SHELL_TYPE" == "bash" ]]; then
-  source "$SHELL_CONFIG"
-elif [[ "$SHELL_TYPE" == "zsh" ]]; then
-  exec zsh
-fi
+reload_shell
 
 echo "Oh My Posh installation and configuration completed!"
