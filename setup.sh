@@ -23,10 +23,10 @@ configure_shell() {
   # Check if oh-my-posh is already configured
   if grep -q "oh-my-posh init" "$SHELL_CONFIG"; then
     echo "Oh My Posh already configured. Updating the theme..."
-    sed -i.bak "/oh-my-posh init/ s|--config .*|--config $THEME)\"|" "$shell_config"
+    sed -i.bak "/oh-my-posh init/ s|--config .*|--config $THEME)\"|" "$SHELL_CONFIG"
   else
     echo "Adding Oh My Posh initialization to $SHELL_CONFIG..."
-    echo "eval \"\$(oh-my-posh init $SHELL_TYPE --config $THEME)\"" >> "$shell_config"
+    echo "eval \"\$(oh-my-posh init $SHELL_TYPE --config $THEME)\"" >> "$SHELL_CONFIG"
   fi
 }
 
