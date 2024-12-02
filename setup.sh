@@ -17,19 +17,16 @@ install_font() {
 }
 
 # Function to configure the shell
-configure_shell() {
-  local shell_config=$1
-  local shell_type=$2
-  
-  echo "Configuring $shell_config with Oh My Posh..."
+configure_shell() { 
+  echo "Configuring $SHELL_CONFIG with Oh My Posh..."
 
   # Check if oh-my-posh is already configured
-  if grep -q "oh-my-posh init" "$shell_config"; then
+  if grep -q "oh-my-posh init" "$SHELL_CONFIG"; then
     echo "Oh My Posh already configured. Updating the theme..."
     sed -i.bak "/oh-my-posh init/ s|--config .*|--config $THEME)\"|" "$shell_config"
   else
-    echo "Adding Oh My Posh initialization to $shell_config..."
-    echo "eval \"\$(oh-my-posh init $shell_type --config $THEME)\"" >> "$shell_config"
+    echo "Adding Oh My Posh initialization to $SHELL_CONFIG..."
+    echo "eval \"\$(oh-my-posh init $SHELL_TYPE --config $THEME)\"" >> "$shell_config"
   fi
 }
 
@@ -91,7 +88,7 @@ esac
 install_oh_my_posh
 check_path
 install_font
-configure_shell "$SHELL_CONFIG" "$SHELL_TYPE"
+configure_shell
 
 reload_shell
 
