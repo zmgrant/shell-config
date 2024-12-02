@@ -46,10 +46,10 @@ check_path() {
     echo "oh-my-posh not found on path, attempting to add..."
     case "$OS" in
       Linux)
-        echo "export PATH=$PATH:$HOME/.local/bin" >> $shell_config
+        echo "export PATH=$PATH:$HOME/.local/bin" >> $SHELL_CONFIG
         ;;
       Darwin)
-        echo "export PATH=$PATH:/opt/homebrew/bin" >> $shell_config
+        echo "export PATH=$PATH:/opt/homebrew/bin" >> $SHELL_CONFIG
         ;;
       *)
         echo "Unsupported OS: $OS"
