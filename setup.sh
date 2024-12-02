@@ -7,7 +7,7 @@ FONT="Meslo"  # Replace with your desired font
 # Function to install Oh My Posh
 install_oh_my_posh() {
   echo "Installing Oh My Posh..."
-  curl -s https://ohmyposh.dev/install.sh | bash
+  curl -s https://ohmyposh.dev/install.sh | bash -s
 }
 
 # Function to install the specified font
