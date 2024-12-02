@@ -65,6 +65,7 @@ check_path() {
   if ! hash oh-my-posh &> /dev/null; then
     echo "Path is borked, still can't find oh-my-posh! Exiting"
     exit 1
+  fi
 }
 
 
