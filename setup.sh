@@ -4,6 +4,8 @@
 THEME="'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/quick-term.omp.json'"  # Replace with your desired theme
 FONT="Meslo"  # Replace with your desired font
 
+export PATH=$PATH:~/.local/bin
+
 # Function to install Oh My Posh
 install_oh_my_posh() {
   echo "Installing Oh My Posh..."
