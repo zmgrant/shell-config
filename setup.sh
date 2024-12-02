@@ -42,7 +42,7 @@ reload_shell() {
 
 # Sort out the path
 update_path() {
-  if hash oh-my-posh &> /dev/null; then
+  if ! hash oh-my-posh &> /dev/null; then
     case "$OS" in
       Linux)
           echo "export PATH=\$PATH:$HOME/.local/bin" >> $SHELL_CONFIG
